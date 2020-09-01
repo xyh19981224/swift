@@ -1,0 +1,141 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '10.0'
+use_frameworks!
+
+def pods
+    pod 'AutoReview'
+#    pod 'AsyncDisplayKit'
+    #pod 'Appsee'
+    pod 'DeviceGuru'
+    pod 'TPKeyboardAvoiding'
+    pod 'pop'
+    pod 'Base64'
+    pod 'SocketRocket'
+#    pod 'JCore'
+#    pod 'JPush'
+    #网络链接库
+#    pod 'Alamofire'
+    pod 'ReachabilitySwift'
+    pod 'Moya/RxSwift', '~> 14.0'
+    pod 'Moya-ObjectMapper/RxSwift'
+    #导航栏设置
+    pod 'KMNavigationBarTransition'
+    #设备信息读取
+    pod 'DeviceKit'
+    #json解析以及转model
+    pod 'SwiftyJSON'
+    pod 'ObjectMapper'
+    pod 'SwiftyUserDefaults'
+    #指示器
+    pod 'PKHUD'
+    pod 'KRProgressHUD'
+    pod 'NVActivityIndicatorView','~> 4.7.0'
+    #下拉刷新
+    pod 'ESPullToRefresh'
+    #页面布局库
+    pod 'TangramKit'
+    pod 'SnapKit','~> 5.0.0'
+#    pod 'RxSwift'
+    #tb、collection占位图
+    pod 'HGPlaceholders'
+    #二维码扫描
+    pod 'swiftScan'
+    #pod 'EFQRCode'
+    pod 'Material'
+    #日历
+#    pod 'FSCalendar'
+    #tag生成
+    pod 'TagListView'
+#    pod 'RazzleDazzle'
+    pod 'Instructions'
+    pod 'Eureka'
+    pod 'Kingfisher'
+    pod 'IQKeyboardManagerSwift'
+    pod 'JXSegmentedView'
+    #轮播图
+    pod 'FSPagerView'
+    pod 'EachNavigationBar'
+    #性能加速框架
+    pod 'Surge'
+    #json转模型
+    pod 'ObjectMapper'
+    #全局网络判断
+    pod 'ReachabilitySwift'
+    #弹出框
+    pod 'EasyTipView'
+    pod "Popover"
+    #强制语法规范
+    pod 'SwiftLint'
+    #权限请求库
+    pod 'SwiftyStoreKit'
+    #文本框美化
+    pod 'TextFieldEffects'
+    pod 'KeychainAccess'
+    pod 'IGListKit'
+    #高德地图
+    pod 'AMap2DMap-NO-IDFA'
+    pod 'AMapSearch-NO-IDFA'
+    pod 'AMapLocation-NO-IDFA'
+    #realm集成
+    #pod 'RealmSwift'
+#    pod 'Realm', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
+#    pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
+    pod "ObjectMapper+Realm"
+    pod 'ObjectMapperAdditions/Realm'
+    #uiview角标
+    pod 'BadgeHub'
+    pod 'SwiftRichString'
+    #大华视频sdk
+    pod 'DataAdapterSDK', :path => './'
+    #加密解密
+    pod 'CryptoSwift'
+    #友盟
+    pod 'UMCCommon'
+    pod 'UMCPush'
+    pod 'UMCSecurityPlugins'
+    pod 'Bugly'
+    pod 'JXPatternLock'
+    pod 'BMPlayer', '~> 1.3.0'
+    pod 'MobileVLCKit', '~>3.3.0'
+    #自定义tabbar
+#    pod 'RAMAnimatedTabBarController'
+#    pod 'ProgressWebViewController'
+end
+
+target 'MultipleProjectManager' do
+    pods
+
+    target 'MultipleProjectManagerTests' do
+        inherit! :search_paths
+    end
+end
+
+swift4= ['swiftScan']
+swift42= []
+swift5 = ['Moya/RxSwift']
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        swift_version = nil
+        
+        if swift4.include?(target.name)
+            print "set pod #{target.name} swift version to 4.2\n"
+            swift_version = '4.0'
+        end
+        if swift42.include?(target.name)
+            print "set pod #{target.name} swift version to 4.2\n"
+            swift_version = '4.2'
+        end
+        
+        if swift5.include?(target.name)
+            print "set pod #{target.name} swift version to 5.2\n"
+            swift_version = '5.2'
+        end
+        
+        if swift_version
+            target.build_configurations.each do |config|
+                config.build_settings['SWIFT_VERSION'] = swift_version
+            end
+        end
+    end
+end
